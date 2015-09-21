@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" type="text/css" href="core/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="core/css/app.css">
+    <link rel="stylesheet" type="text/css" href="core/css/war.css">
+    <link rel="stylesheet" type="text/css" href="core/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="core/css/iconfont.css">
+</head>
+
+<body>
+    <script src='core/jq/jquery-1.11.0.min.js'></script>
+    <script src='core/jq/screenfull.js'></script>
+
+    <script src='core/Globle.js'></script>
+
+    <script src="core/uitls/CutImage.js"></script>
+
+    <script src="core/Magnifier/MagnifierBase.js"></script>
+    <script src="core/Magnifier/Magnifier.js"></script>
+
+    <script src="core/component/ModuleBase.js"></script>
+    <script src="core/component/LeftModule.js"></script>
+    <script src="core/component/RightModule.js"></script>
+    <script src="core/component/CenterModule.js"></script>
+    <script src="core/component/FullModule.js"></script>
+
+    <script src='core/FundusReading.js'></script>
+    <div style="width: 966px; height: 675px;  margin: 100px">
+        <div id="content"></div>
+    </div>
+    <script>
+        var xml = '<?xml version= "1.0" encoding= "UTF-8" ?><pohotoList><patientPhoto id="11111111" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20" > </patientPhoto><patientPhoto id="6" name="name6" checkbox ="1" path ="core/images/bjwc000016_20150201_120000_Color_R_003.jpg" type= "1" viewName="右眼" date="2014-05-07" width="2592 " height="1944" cutwidth="223" cutheight="1" ></patientPhoto><patientPhoto id="2" checkbox ="1" name="name1" path="core/images/upload__670f005f_1496f4fe58e__8000_00000006.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2016" cutwidth="310" cutheight="1" > </patientPhoto><patientPhoto id="4" name="name6" checkbox ="1" path ="core/images/20150320145743.png" type= "1" viewName="右眼" date="2014-05-07" width="1280" height="1036" cutwidth="90" cutheight="1"></patientPhoto><patientPhoto id="3" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20"> </patientPhoto><patientPhoto id="5" name="name6" checkbox ="1" path ="core/images/wangwei_20140514_141645_Color_R_036.jpg" type= "1" viewName="右眼" date="2014-05-07" width="3216" height="2136" cutwidth="570" cutheight="20"></patientPhoto></pohotoList>';
+        var referPhoto = '<?xml version= "1.0" encoding= "UTF-8" ?><pohotoList><referPhoto id="11111111" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20" > </referPhoto><referPhoto id="6" name="name6" checkbox ="1" path ="core/images/wangwei_20140514_141645_Color_R_036.jpg" type= "1" viewName="右眼" date="2014-05-07" width="3216" height="2136" cutwidth="570" cutheight="20" ></referPhoto><referPhoto id="2" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20" > </referPhoto><referPhoto id="4" name="name6" checkbox ="1" path ="core/images/20150320145743.png" type= "1" viewName="右眼" date="2014-05-07" width="1280" height="1036" cutwidth="90" cutheight="36"></referPhoto><referPhoto id="3" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20"> </referPhoto><referPhoto id="5" name="name6" checkbox ="1" path ="core/images/wangwei_20140514_141645_Color_R_036.jpg" type= "1" viewName="右眼" date="2014-05-07" width="3216" height="2136" cutwidth="570" cutheight="20"></referPhoto></pohotoList>';
+        var patientHistoryPhoto = '<?xml version= "1.0" encoding= "UTF-8" ?><pohotoList><patientHistoryPhoto id="11111111" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20" > </patientHistoryPhoto><patientHistoryPhoto id="6" name="name6" checkbox ="1" path ="core/images/wangwei_20140514_141645_Color_R_036.jpg" type= "1" viewName="右眼" date="2014-05-07" width="3216" height="2136" cutwidth="570" cutheight="20" ></patientHistoryPhoto><patientHistoryPhoto id="2" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20" > </patientHistoryPhoto><patientHistoryPhoto id="4" name="name6" checkbox ="1" path ="core/images/20150320145743.png" type= "1" viewName="右眼" date="2014-05-07" width="1280" height="1036" cutwidth="90" cutheight="36"></patientHistoryPhoto><patientHistoryPhoto id="3" checkbox ="1" name="name1" path="http://115.28.79.25/group2/M00/00/00/cxxPGVT0HguAXmO3AA4iK6aMUvM358.jpg" type="1" viewName="左眼" date="2014-05-06" width="3216" height="2136" cutwidth="570" cutheight="20"> </patientHistoryPhoto><patientHistoryPhoto id="5" name="name6" checkbox ="1" path ="core/images/wangwei_20140514_141645_Color_R_036.jpg" type= "1" viewName="右眼" date="2014-05-07" width="3216" height="2136" cutwidth="570" cutheight="20"></patientHistoryPhoto></pohotoList>';
+        var xml1 = '<?xml version="1.0" encoding="UTF-8"?><pohotoList><titleName id="1" name="阅片测试"></titleName><titleName id="2" name="照片"></titleName><titleName id="3" name="历照片"></titleName><titleName id="4" name="assets"></titleName></pohotoList>';
+        globle.Globle.ReadingXML = xml;
+        globle.Globle.ReferenceXML = referPhoto;
+        globle.Globle.historyXML = patientHistoryPhoto;
+        globle.Globle.TitleNameXML = xml1;
+        var a = new glass.FundusReading("content");
+    </script>
+</body>
+
+</html>

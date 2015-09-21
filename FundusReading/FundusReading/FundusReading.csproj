@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{DD25BC75-FEED-4F76-82BF-AF1C337A40F0}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="core\css\animate.css" />
+    <Content Include="core\css\app.css" />
+    <Content Include="core\css\bootstrap.css" />
+    <Content Include="core\css\iconfont.css" />
+    <Content Include="core\css\war.css" />
+    <Content Include="core\images\20150320145743.png" />
+    <Content Include="core\images\4058f0fc61823ca79299ffd8b557ba46.jpg" />
+    <Content Include="core\images\964ac83fd123c8bfb2c0495f5e2944ca.jpg" />
+    <Content Include="core\images\bjwc000016_20150201_120000_Color_R_003.jpg" />
+    <Content Include="core\images\clear.png" />
+    <Content Include="core\images\d361e6b92a796720d12672547ad55972.jpg" />
+    <Content Include="core\images\upload__670f005f_1496f4fe58e__8000_00000006.jpg" />
+    <Content Include="core\images\wangwei_20140514_141645_Color_R_036.jpg" />
+    <Content Include="core\images\wangwei_20140514_141714_Color_L_037.jpg" />
+    <Content Include="core\jq\jquery-1.11.0.min.js" />
+    <Content Include="core\jq\jquery.mousewheel.js" />
+    <Content Include="core\jq\screenfull.js" />
+    <Content Include="core\uitls\screenfull.min.js" />
+    <Content Include="index.html" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="core\component\CenterModule.ts" />
+    <TypeScriptCompile Include="core\component\FullModule.ts" />
+    <TypeScriptCompile Include="core\component\RightModule.ts" />
+    <TypeScriptCompile Include="core\component\LeftModule.ts" />
+    <TypeScriptCompile Include="core\component\ModuleBase.ts" />
+    <TypeScriptCompile Include="core\FundusReading.ts" />
+    <TypeScriptCompile Include="core\Globle.ts" />
+    <TypeScriptCompile Include="core\jq\jquery.d.ts" />
+    <TypeScriptCompile Include="core\jq\screenfull.d.ts" />
+    <TypeScriptCompile Include="core\Magnifier\Magnifier.ts" />
+    <TypeScriptCompile Include="core\Magnifier\MagnifierBase.ts" />
+    <TypeScriptCompile Include="core\uitls\CutImage.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="core\fonts\iconfont.eot" />
+    <Content Include="core\fonts\iconfont.svg" />
+    <Content Include="core\fonts\iconfont.ttf" />
+    <Content Include="core\fonts\iconfont.woff" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>FundusReading</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4405</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:9318/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>
