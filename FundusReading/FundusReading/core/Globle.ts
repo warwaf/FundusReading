@@ -74,6 +74,7 @@ module globle
          * @type {JQuery}
          */
         static main_module: JQuery;
+       
         /**
          * 左边栏模块
          * @type {JQuery}
@@ -85,6 +86,26 @@ module globle
          */
         static center_module: JQuery;
         /**
+         * 中间模块下得放大镜模块
+         * @type {JQuery}
+         */
+        static Magnifier_module: JQuery;
+        /**
+         * 中间模块下的拖拽显示模块
+         * @type {JQuery}
+         */
+        static drag_module: JQuery;
+        /**
+        * 中间模块下的拖拽显示模块左边
+        * @type {JQuery}
+        */
+        static drag_module_left: JQuery;
+        /**
+         * 中间模块下的拖拽显示模块右边
+         * @type {JQuery}
+         */
+        static drag_module_right: JQuery;
+        /**
          * 右边模块
          * @type {JQuery}
          */
@@ -94,6 +115,11 @@ module globle
          * @type {JQuery}
          */
         static full_module: JQuery;
+        /**
+         * 是否全屏
+         * @boolean 默认为false
+         */
+        static is_full: boolean = false;
         // ===================================下个版本的扩展功能===============================
          /**
          * 是否启动三级阅片 （下个版本的扩展功能）
