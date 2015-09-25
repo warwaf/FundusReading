@@ -73,14 +73,12 @@ module war{
 			this._Magnifiter = obj;
             this._size = size;
             this._url = url;
-            this.init();
-           
+            this.init();        
         }
         /**
          * 初始化
          */
-        private init(){
-           
+        private init(){           
             /**
              * 创建背景图片
              * @param {[type]} "<img></img>" []
@@ -94,6 +92,7 @@ module war{
              */
             this.MagnifierGlass = $("<div class='magnifier-glass'></div>");
             this._Magnifiter.append(this.MagnifierGlass);           
+         
             this.MagnifierGlassBgImg = $("<img></img>");
             this.MagnifierGlass.append(this.MagnifierGlassBgImg);
 
@@ -102,14 +101,11 @@ module war{
           
            
             this.dragMagnifiter(this.MagnifierGlass);
-            this.MagnifierGlassBgImg[0].ondragstart = function ()
-            {
-                return false;
-            }
-            this._bgImg[0].ondragstart = function ()
-            {
-                return false;
-            }
+            //阻止图片拖拽
+            uitls.Kit.preventImgDrag(this.MagnifierGlassBgImg);
+            //阻止图片拖拽
+            uitls.Kit.preventImgDrag(this._bgImg);
+            
             //this._Magnifiter.mousemove(function () { return false });
         }
 
@@ -122,32 +118,44 @@ module war{
                 var top = parent.position().top;
                 var x = e.pageX - left;
                 var y = e.pageY - top;   
-                console.log(left, x)
-                globle.Globle.center_module.mousemove(function (ev)
+               
+                if (!globle.Globle.is_full)
                 {
-                    var _x = ev.pageX - x;//获得X轴方向移动的值
-                    var _y = ev.pageY - y;//获得Y轴方向移动的值      
-                    o.setMgnifiterGlassPos(_x, _y);
+                    globle.Globle.center_module.mousemove(function (ev)
+                    {
+                        var _x = ev.pageX - x;//获得X轴方向移动的值
+                        var _y = ev.pageY - y;//获得Y轴方向移动的值      
+                        o.setMgnifiterGlassPos(_x, _y);
+                    })
+                } else
+                {
+                    globle.Globle.full_module.mousemove(function (ev)
+                    {                        
+                        var _x = ev.pageX - x;//获得X轴方向移动的值
+                        var _y = ev.pageY - y;//获得Y轴方向移动的值      
+                        o.setMgnifiterGlassPos(_x, _y);
+                    })
+                }               
+            })
+          
+                globle.Globle.center_module.mouseup(function ()
+                {
+                    globle.Globle.center_module.unbind("mousemove");
                 })
-            })
-            globle.Globle.center_module.mouseup(function ()
-            {
-                globle.Globle.center_module.unbind("mousemove");
-            })
+            
+                globle.Globle.full_module.mouseup(function ()
+                {                  
+                    globle.Globle.full_module.unbind("mousemove");
+                })
+           
         }
         setImg()
         {
             this.setMagnifierGlassStyle();
             var pos = (this.size - this._MagnifierSize) / 2;
             this.setMgnifiterGlassPos(pos, pos);
-            var height = this.bgImg.height();
-            if (height > 642)
-            {
-                height = 635;
-            }
             this._Magnifiter.css({
-                "width": this._size,
-                "height": height,
+                "width": this._size,               
                 "overflow":"hidden"
             });
         }
@@ -207,9 +215,12 @@ module war{
          */
         private setMagnifierMultiple()
         {
-            console.log(this._bgImg.width());
+           
             this.MagnifierGlassBgImg.css({ "width": this._bgImg.width() * this._multiple, "height": this._bgImg.height() * this._multiple});
         }
+         /**
+         * 设置放大镜镜片的边框
+         */
         private setMagnifierGlassBorder()
         {           
             this.MagnifierGlass.css("border", this._borderSize + "px dashed rgb(136, 136, 136)");
@@ -219,10 +230,12 @@ module war{
         */
         private updataBgImage()
         {
-            this._bgImg.attr("src", this._url).width(this._size).height(this._size);;
+            this._bgImg.attr("src", this._url).attr("width",this._size).attr("height",this._size);;
             this.MagnifierGlassBgImg.attr("src", this._url);
         }
-
+         /**
+        * 切换放大镜镜片的显示
+        */
         private toggleMagniterGlass()
         {
             if (this._isShow)
@@ -324,8 +337,7 @@ module war{
          * @param {number} value [description]
          */
         get url():string{
-            return this._url;
-            
+            return this._url;           
         }
         /**
          * url 的set 方法
@@ -333,8 +345,7 @@ module war{
          */
         set url(value:string){
             this._url = value;
-            this.updataBgImage();
-            
+            this.updataBgImage();           
         }
         /**
          * size 的get 方法
