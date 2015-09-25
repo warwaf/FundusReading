@@ -713,8 +713,7 @@ interface JQuery
     siblings(selector?: string): JQuery;
 
     slice(start: number, end?: number): JQuery;
-    
-       
+ 
 }
 
 declare var jQuery: JQueryStatic;
