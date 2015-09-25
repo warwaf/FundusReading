@@ -46,5 +46,27 @@
        { 
            return str.replace(/(\s*$)/g, "");      
        }
+         /**
+        *阻止图片拖动
+        *@target 目标图片 JQuery对象
+        *@return false
+        */
+       static preventImgDrag(target:JQuery)
+       {
+           target[0].ondragstart = function ()
+           {
+               return false;
+           }
+       }
+       /**
+        *把字符串转化为数组
+        *@str 字符串 
+        *@return Array<any>
+        */
+       static stringToArray(str: string): Array<any>
+       {
+           var arr = str.split(",");
+           return arr;
+       }
     }
 } 
