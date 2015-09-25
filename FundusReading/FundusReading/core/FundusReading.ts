@@ -23,7 +23,7 @@ module glass{
             globle.Globle.left_module = $("<div><div class='vbox'></div></div>").addClass("col w-160 lter b-r");    //左边栏模块
             globle.Globle.center_module = $("<div><div class='vbox'></div></div>").addClass("col"); //中间模块
             globle.Globle.right_module = $("<div><div class='vbox'></div></div>").addClass("col w-160 lter b-l");;   //右边栏模块
-            globle.Globle.full_module = $("<div></div>");    //全屏模块
+            globle.Globle.full_module = $("<div class='full-module'></div>");    //全屏模块
             globle.Globle.main_module.append(globle.Globle.left_module);
             globle.Globle.main_module.append(globle.Globle.center_module);
             globle.Globle.main_module.append(globle.Globle.right_module);
