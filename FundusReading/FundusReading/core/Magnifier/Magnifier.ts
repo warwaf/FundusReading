@@ -11,29 +11,8 @@ module war{
 	/**
 	 * 0001 创建 Magnifier类
 	 */
-	export class Magnifier extends war.MagnifierBase{
-		
-        /**
-         * 图片真是的宽度
-         * @type {number}
-         */
-        private _realWidth: number      = 0;
-        /**
-         * 图片真是的高度
-         * @type {number}
-         */
-        private _realHeight: number     = 0;
-        /**
-         * 图片剪切的宽度
-         * @type {number}
-         */
-        private _cutWidth: number       = 0;
-         /**
-         * 图片剪切的高度
-         * @type {number}
-         */
-        private _cutHeight: number = 0;
-
+	export class Magnifier extends MagnifierBase{
+		       
         private _CutArr: Array<number>;
 
         private _greyFilter: boolean = false;
@@ -47,7 +26,7 @@ module war{
 
         setImg()
         {
-            uitls.CutImage.cutImage(this.bgImg, 642, this._CutArr);
+            uitls.CutImage.cutImage(this.bgImg, this.size, this._CutArr);
             super.setImg();
         }
 
