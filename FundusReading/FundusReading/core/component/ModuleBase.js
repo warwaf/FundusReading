@@ -1,12 +1,15 @@
 /**
- * FundusReading
- *版本：1.0
- *编号   创建/修改日期    创建/修改人   内容
- *0001    2015-08-31         王威
- *
+ * component
  */
 var component;
 (function (component) {
+    /**
+     * ModuleBase
+     *版本：1.0
+     *编号   创建/修改日期    创建/修改人   内容
+     *0001    2015-08-31        王威
+     *0002    2015-09-22        王威    添加左右 imageList 拖拽效果
+     */
     var ModuleBase = (function () {
         function ModuleBase() {
             this._title = $("<div class='nav-tabs-alt'></div>");
@@ -16,16 +19,19 @@ var component;
             this.moduleContent();
         }
         /**
-         *
+         * 标题或工具栏模块
          */
         ModuleBase.prototype.moduleTitle = function () {
             this._title.append(this.module_title);
         };
+        /**
+         * 主题内容模块
+         */
         ModuleBase.prototype.moduleContent = function () {
             this._content.append(this.module_content);
         };
         /**
-         * 创建 imageList
+         * 创建 imageList  子类可以调用这个方法
          * @param {JQuery} parent [description]
          * @param {[type]} xml    [description]
          * @param {[type]} str    [description]
@@ -59,22 +65,65 @@ var component;
                 o.createImgModule(parent, arr, [realityWidth, realityHeight, cutWidth, cutHeight]);
             });
         };
+        /**
+        *0002
+        *检测拖拽模块中Image的数量  如果小于2张，测隐藏拖拽模块
+        */
+        ModuleBase.prototype.checkDragModuleImages = function () {
+            var i = 0;
+            globle.Globle.drag_module.find("img").each(function () {
+                if (!uitls.Kit.isNullOrEmpty($(this).attr("src"))) {
+                    i++;
+                }
+            });
+            if (i < 2) {
+                globle.Globle.drag_module.hide();
+                globle.Globle.Magnifier_module.show();
+            }
+        };
+        /**
+        *0001
+        *创建一个图片模块（包含下面的信息栏）
+        *@parent  父级   JQuery对象
+        *@arr
+        *@cutArr  剪切数组【真实宽，真实高，剪切宽，剪切高】
+        */
         ModuleBase.prototype.createImgModule = function (parent, arr, cutArr) {
+            var o = this;
             var imageModule = $("<div></div>");
             var imgModule = $('<div class="img-model"></div>');
             var img = $('<img>');
+            img.attr("cutArr", cutArr);
             imgModule.append(img);
             imageModule.append(imgModule);
             parent.append(imageModule);
+            //----------------------------------------------------------------
+            //阻止图片拖拽
+            uitls.Kit.preventImgDrag(img);
             this.creatImgModuleInfo(imageModule);
             img.attr("src", arr[0]);
             uitls.CutImage.cutImage(img, 144, cutArr);
-            img.mouseup(function () {
+            img.mouseup(function (e) {
+                clearInterval(o.timer);
                 globle.Globle.main_magnifier.url = $(this).attr("src");
                 globle.Globle.main_magnifier.cutArr = cutArr;
-            }).mousedown(function () {
+            }).mousedown(function (e) {
+                var ev = e;
+                var src = $(this).attr("src");
+                var _cutArr = uitls.Kit.stringToArray($(this).attr("cutArr"));
+                o.timer = setTimeout(function () {
+                    globle.Globle.drag_module.show();
+                    globle.Globle.Magnifier_module.hide();
+                    component.DragModule.creatDragModule(ev, src, _cutArr);
+                }, 300);
             });
         };
+        /**
+        *0001
+        *创建信息栏
+        *@parent 父级   JQuery对象
+        *@arr
+        */
         ModuleBase.prototype.creatImgModuleInfo = function (parent) {
             if (this.kitInfo == "referPhoto" || this.kitInfo == 'patientHistoryPhoto') {
                 var kitModule = $('<div class="kit-model"></div>');

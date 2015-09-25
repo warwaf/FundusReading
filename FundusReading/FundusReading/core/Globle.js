@@ -31,6 +31,11 @@ var globle;
          * @param {[type]} value [description]
          */
         Globle.jsWheel = function (value) { };
+        /**
+         * 是否全屏
+         * @boolean 默认为false
+         */
+        Globle.is_full = false;
         // ===================================下个版本的扩展功能===============================
         /**
         * 是否启动三级阅片 （下个版本的扩展功能）

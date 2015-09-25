@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="core\component\CenterModule.ts" />
+    <TypeScriptCompile Include="core\component\DragModule.ts" />
     <TypeScriptCompile Include="core\component\FullModule.ts" />
     <TypeScriptCompile Include="core\component\RightModule.ts" />
     <TypeScriptCompile Include="core\component\LeftModule.ts" />
@@ -52,6 +53,7 @@
     <TypeScriptCompile Include="core\Magnifier\Magnifier.ts" />
     <TypeScriptCompile Include="core\Magnifier\MagnifierBase.ts" />
     <TypeScriptCompile Include="core\uitls\CutImage.ts" />
+    <TypeScriptCompile Include="core\uitls\uitls.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="core\fonts\iconfont.eot" />

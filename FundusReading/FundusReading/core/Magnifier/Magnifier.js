@@ -22,32 +22,12 @@ var war;
         __extends(Magnifier, _super);
         function Magnifier(obj, size, url, cutArr) {
             _super.call(this, obj, size, url);
-            /**
-             * 图片真是的宽度
-             * @type {number}
-             */
-            this._realWidth = 0;
-            /**
-             * 图片真是的高度
-             * @type {number}
-             */
-            this._realHeight = 0;
-            /**
-             * 图片剪切的宽度
-             * @type {number}
-             */
-            this._cutWidth = 0;
-            /**
-            * 图片剪切的高度
-            * @type {number}
-            */
-            this._cutHeight = 0;
             this._greyFilter = false;
             this._CutArr = cutArr;
             this.setImg();
         }
         Magnifier.prototype.setImg = function () {
-            uitls.CutImage.cutImage(this.bgImg, 642, this._CutArr);
+            uitls.CutImage.cutImage(this.bgImg, this.size, this._CutArr);
             _super.prototype.setImg.call(this);
         };
         Object.defineProperty(Magnifier.prototype, "cutArr", {

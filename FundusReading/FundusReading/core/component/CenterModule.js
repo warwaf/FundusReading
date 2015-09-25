@@ -13,6 +13,13 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var component;
 (function (component) {
+    /**
+     * CenterModule  继承 ModuleBase
+     *版本：1.0
+     *编号   创建/修改日期    创建/修改人   内容
+     *0001    2015-08-31        王威
+     *0002    2015-09-22        王威    添加左右 imageList 拖拽效果
+     */
     var CenterModule = (function (_super) {
         __extends(CenterModule, _super);
         function CenterModule() {
@@ -34,7 +41,6 @@ var component;
                     Magnifier.toggleClass("active");
                     o.MagnifierModule.toggleClass("hide");
                     o.MagnifierModule.toggleClass("animated fadeInRightMd");
-                    // o.FilterModule.toggleClass("hide");
                     o.FilterModule.addClass("hide");
                     globle.Globle.main_magnifier.IsShow = !globle.Globle.main_magnifier.IsShow;
                 }
@@ -69,48 +75,68 @@ var component;
             var cell = $('<div class="cell scroll-hidden"></div>');
             var cell_inner = $('<div class="main-inner"></div>');
             cell.append(cell_inner);
-            var mainMagnifier = $('<div></div>');
-            var dragModule = $('<div class="drag-module"></div>');
-            mainMagnifier.hide();
-            this.creatDragModule(dragModule);
-            cell_inner.append(mainMagnifier, dragModule);
+            globle.Globle.Magnifier_module = $('<div></div>');
+            globle.Globle.drag_module = $('<div class="drag-module "></div>');
+            this.creatDragModule(globle.Globle.drag_module);
+            cell_inner.append(globle.Globle.Magnifier_module, globle.Globle.drag_module);
             this.module_content = cell;
             _super.prototype.moduleContent.call(this);
-            globle.Globle.main_magnifier = new war.Magnifier(mainMagnifier, 635, "core/images/wangwei_20140514_141714_Color_L_037.jpg", [3216, 2136, 555, 20]);
+            globle.Globle.main_magnifier = new war.Magnifier(globle.Globle.Magnifier_module, 635, "", [3216, 2136, 555, 20]);
         };
+        /**
+        *0001
+        *创建拖拽后的面板
+        *@parent 父级   JQuery对象
+        */
         CenterModule.prototype.creatDragModule = function (parent) {
-            var left = $('<div class ="left-drag-module"></div>');
+            globle.Globle.drag_module_left = $('<div class ="left-drag-module "></div>');
             var leftImg = $("<img/>");
-            leftImg.attr("src", "core/images/wangwei_20140514_141714_Color_L_037.jpg");
+            //leftImg.attr("src","core/images/wangwei_20140514_141645_Color_R_036.jpg");
             uitls.CutImage.cutImage(leftImg, 312, [3216, 2136, 555, 20]);
-            left.append(leftImg);
-            var right = $('<div class ="right-drag-module"></div>');
+            globle.Globle.drag_module_left.append(leftImg);
+            globle.Globle.drag_module_right = $('<div class ="right-drag-module"></div>');
             var rightImg = $("<img/>");
-            rightImg.attr("src", "core/images/wangwei_20140514_141714_Color_L_037.jpg");
             uitls.CutImage.cutImage(rightImg, 312, [3216, 2136, 555, 20]);
-            right.append(rightImg);
-            parent.append(left, right);
-            this.createDragModuleKit(left);
-            this.createDragModuleKit(right);
+            globle.Globle.drag_module_right.append(rightImg);
+            parent.append(globle.Globle.drag_module_left, globle.Globle.drag_module_right);
+            this.createDragModuleKit(globle.Globle.drag_module_left, "drag-left");
+            this.createDragModuleKit(globle.Globle.drag_module_right, "drag-right");
         };
-        CenterModule.prototype.createDragModuleKit = function (parent) {
-            var trash = $('<i class="iconfont icon-trash"></i>');
+        /**
+        *0001
+        *创建拖拽后的面板的工具栏
+        *@parent 父级   JQuery对象
+        */
+        CenterModule.prototype.createDragModuleKit = function (parent, src) {
+            var o = this;
+            var trash = $('<i class="iconfont icon-trash" value="' + src + '"></i>');
             var fullscreen = $('<i class="iconfont icon-weibiaoti2"></i>');
             var kit = $('<div class="drag-module-kit"></div>');
             kit.append(trash, fullscreen);
             parent.append(kit);
+            //-------------------------------------工具栏操作------------------------------------------
             trash.click(function () {
                 $(this).parent().parent().find("img").attr("src", "");
+                if ($(this).attr("value") == "drag-left") {
+                    globle.Globle.main_magnifier.url = globle.Globle.drag_module_right.find("img").attr("src");
+                    globle.Globle.main_magnifier.cutArr = uitls.Kit.stringToArray(globle.Globle.drag_module_right.attr("cutArr"));
+                }
+                if ($(this).attr("value") == "drag-right") {
+                    globle.Globle.main_magnifier.url = globle.Globle.drag_module_left.find("img").attr("src");
+                    globle.Globle.main_magnifier.cutArr = uitls.Kit.stringToArray(globle.Globle.drag_module_left.attr("cutArr"));
+                }
+                o.checkDragModuleImages();
             });
             fullscreen.click(function () {
-                if (screenfull.isFullscreen) {
-                    console.log("--false--" + screenfull.isFullscreen);
-                }
-                else {
-                    globle.Globle.main_module.toggle();
-                    globle.Globle.full_module.toggle();
+                if (!screenfull.isFullscreen) {
+                    globle.Globle.is_full = true;
+                    globle.Globle.main_module.hide();
+                    globle.Globle.full_module.show();
+                    globle.Globle.full_left_magnifier.url = globle.Globle.drag_module_left.find("img").attr("src");
+                    globle.Globle.full_left_magnifier.cutArr = uitls.Kit.stringToArray(globle.Globle.drag_module_left.attr("cutArr"));
+                    globle.Globle.full_right_magnifier.url = globle.Globle.drag_module_right.find("img").attr("src");
+                    globle.Globle.full_right_magnifier.cutArr = uitls.Kit.stringToArray(globle.Globle.drag_module_right.attr("cutArr"));
                     screenfull.request(globle.Globle.full_module[0]);
-                    console.log("--true--" + screenfull.isFullscreen);
                 }
             });
             $(document).keyup(function (event) {
@@ -119,9 +145,15 @@ var component;
                         globle.Globle.main_module.show();
                         globle.Globle.full_module.hide();
                         screenfull.exit();
+                        globle.Globle.is_full = false;
                 }
             });
         };
+        /**
+        *0001
+        *创建放大镜工具栏
+        *@parent 父级   JQuery对象
+        */
         CenterModule.prototype.creatMagnifier = function (parent) {
             this.MagnifierModule = $('<li class="war-v hide"></li>');
             var nav = $('<ul class="nav nav-tabs animated fadeInRightMd"></ul>');
@@ -131,6 +163,7 @@ var component;
             nav.append(border, multiple, size);
             this.MagnifierModule.append(nav);
             parent.append(this.MagnifierModule);
+            //-------------------------------------工具栏操作-------------------------------------------------
             border.find("input[type=checkbox]").change(function () {
                 if ($(this).is(':checked')) {
                     globle.Globle.main_magnifier.BorderSize = 1;
@@ -182,6 +215,11 @@ var component;
                 globle.Globle.main_magnifier.MagnifierSize = $(this).val();
             });
         };
+        /**
+        *0001
+        *创建滤镜工具栏
+        *@parent 父级   JQuery对象
+        */
         CenterModule.prototype.createFilter = function (parent) {
             this.FilterModule = $('<li class="war-v  hide"></li>');
             var nav = $('<ul class="nav nav-tabs"></ul>');
@@ -194,6 +232,7 @@ var component;
             nav.append(lighteness, contrast, green, grey, inverse, reset);
             this.FilterModule.append(nav);
             parent.append(this.FilterModule);
+            //-------------------------------------工具栏操作-------------------------------------------------
             grey.find("button").click(function () {
                 globle.Globle.main_magnifier.greyFilter = true;
             });
