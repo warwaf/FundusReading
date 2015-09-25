@@ -47,6 +47,9 @@
 .kit-model label{
 	margin-left:10px;
 }
+.kit-model label:first-child{
+	cursor:pointer;
+}
 .w-160{
 	width: 160px;
 }
@@ -117,27 +120,27 @@ label{
     top: 3px;
     left: 3px;
  }
- .drag-module{
-   
+ .drag-module{  
  	height: 635px;
- 	
+ 	display:none;
  }
  .drag-module .left-drag-module,
  .drag-module .right-drag-module{
  	
-     width: 319px;
+     width: 318px;
      height: auto;
      overflow: hidden;
      margin-top: 163px;
+     
      float: left;
-     border-top: 1px solid green;
-     border-bottom: 1px solid green;
+     border: 1px solid #ccc;
+   
      border-radius: 20px;
-     border-right:  1px solid green;
+  
      position: relative;
  }
- .drag-module .left-drag-module{
- 	border-left:  1px solid green;
+ .drag-module .right-drag-module{
+ 	margin-left:1px
  }
 
 .drag-module .drag-module-kit {
@@ -145,7 +148,6 @@ label{
      top: 3px;
      right: 5px;
 }
-
 .drag-module .drag-module-kit i {
        font-size: 20px;
        margin: 0 2px;
@@ -163,3 +165,54 @@ label{
 .drag-module .drag-module-kit i:last-child{
 	color: #EEAD0E;
 }
+
+.drag-module-tool {
+    position:absolute;
+    top:0;
+    left:0;
+    width:140px;
+    height:auto;
+    overflow:hidden;
+    cursor:pointer;
+    display:table-cell;
+    border-radius:10px;
+}
+
+.drag-module-tool img {
+    width:140px;
+    height:140px;
+}
+
+.hbox {
+      table-layout:auto; 
+}
+
+.full-module {
+    position: absolute;
+    overflow:  hidden ;
+    background :  #fff ;
+    top : 0;
+    left : 0;
+    display : none 
+}
+.full-module-left {
+   left: 2px;
+   top: 80px;
+   position:absolute;
+   border-radius:40px
+}
+.full-module-right {
+   right: 2px;
+   top: 80px;
+   position:absolute;
+   border-radius:40px
+}
+.full-module-title .nav > li > a {
+   padding:10px !important;
+}
+
+.full-module-title .war-v a {
+    height: 42px;
+}
+.clearfix:after{content:"."; height:0; display:block;clear:both;visibility:hidden}
+
