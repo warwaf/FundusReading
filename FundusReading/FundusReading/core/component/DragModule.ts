@@ -18,8 +18,6 @@
             o.drag_module.append(o.drag_module_img);
             globle.Globle.main_module.parent().append(o.drag_module);
 
-           // o.drag_module_img[0].ondragstart = function () { return false; }
-
             uitls.CutImage.cutImage(o.drag_module_img, 140,cutArr);
             o.drag_module_img.attr("src", src);
             //阻止图片拖拽
@@ -35,7 +33,7 @@
 
             var x = ev.pageX - left;
             var y = ev.pageY - top;
-            o.drag_module.mousemove(function (e)
+            $(document.body).mousemove(function (e)
             {
                 var _x = e.pageX - x;//获得X轴方向移动的值
                 var _y = e.pageY - y;//获得Y轴方向移动的值
@@ -62,6 +60,7 @@
             }).mouseup(function ()
             {
                 o.removeDragModule();
+                $(document.body).unbind("mousemove");
                 var img;
                 if (o.direction_module == "right")
                 {
