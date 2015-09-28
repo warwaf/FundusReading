@@ -102,10 +102,12 @@ module component
              var leftImg = $("<img/>");
              //leftImg.attr("src","core/images/wangwei_20140514_141645_Color_R_036.jpg");
              uitls.CutImage.cutImage(leftImg, 312, [3216, 2136, 555, 20]);
+            
              globle.Globle.drag_module_left.append(leftImg);
              globle.Globle.drag_module_right = $('<div class ="right-drag-module"></div>');
              var rightImg = $("<img/>");
              uitls.CutImage.cutImage(rightImg, 312, [3216, 2136, 555, 20]);
+             
              globle.Globle.drag_module_right.append(rightImg);
              parent.append(globle.Globle.drag_module_left, globle.Globle.drag_module_right);
 
@@ -155,19 +157,35 @@ module component
                      globle.Globle.full_right_magnifier.cutArr = uitls.Kit.stringToArray(globle.Globle.drag_module_right.attr("cutArr"));
 
                      screenfull.request(globle.Globle.full_module[0]);                   
-                 }                                
+                 }                               
              });
-             $(document).keyup(function (event)
-             {             
-                 switch (event.which)
-                 {
-                     case 27:
-                         globle.Globle.main_module.show();
-                         globle.Globle.full_module.hide();
-                         screenfull.exit(); 
-                         globle.Globle.is_full = false;                                
-                 }
-             });
+             //监听全屏事件
+             $(document).bind("webkitfullscreenchange", function ()
+             {
+                 o.exit();
+             }).bind("mozfullscreenchange", function ()
+             {
+                 o.exit();
+             }).bind("MSFullscreenChange", function ()
+             {               
+                 o.exit();
+             }).bind("fullscreenChange", function ()
+             {                
+                 o.exit();
+             })            
+         }
+         /**
+          *退出全屏
+          */
+         private exit()
+         {
+             if (!screenfull.isFullscreen)
+             {
+                 globle.Globle.main_module.show();
+                 globle.Globle.full_module.hide();
+                 screenfull.exit();
+                 globle.Globle.is_full = false; 
+             }
          }
          /**
          *0001
