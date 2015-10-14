@@ -60,13 +60,13 @@ module component
                 var imgId = $(this).attr("id");
                 var imgDate = $(this).attr("date");
                 var name = $(this).attr("name");
-                var imgType = $(this).attr("type");
+                var eyeType = $(this).attr("type");
                 var realityWidth = $(this).attr("width");
                 var realityHeight = $(this).attr("height");
                 var cutWidth = $(this).attr("cutwidth");
                 var cutHeight = $(this).attr("cutheight");
                 var arr: Array<any> = [];
-                arr.push(path, checkBox, imgId, imgDate, name, imgType);
+                arr.push(path, checkBox, imgId, imgDate, name, eyeType);
                 var nametype;
                 if (i < 9) { nametype = "00" + (i + 1) } else
                 {
@@ -118,7 +118,7 @@ module component
             //阻止图片拖拽
             uitls.Kit.preventImgDrag(img);
 
-            this.creatImgModuleInfo(imageModule);
+            this.creatImgModuleInfo(imageModule,arr);
             img.attr("src", arr[0]);
             uitls.CutImage.cutImage(img, 144, cutArr);
             img.mouseup(function (e)
@@ -145,22 +145,75 @@ module component
         *@parent 父级   JQuery对象
         *@arr 
         */
-        private creatImgModuleInfo(parent:JQuery)
+        private creatImgModuleInfo(parent:JQuery,arr)
         {
+           
             if (this.kitInfo == "referPhoto" || this.kitInfo == 'patientHistoryPhoto')
             {
                 var kitModule = $('<div class="kit-model"></div>');
-                var name = $('<label>name</label>');
+                var name = $('<label>'+arr[4]+'</label>');
                 kitModule.append(name);
             } else
             {
+               
                 var kitModule = $('<div class="kit-model"></div>');
                 var checkBox = $('<input type="checkbox"/>');
-                var eye = $('<label>L</label>');
-                var name = $('<label>name</label>');
+                var eye = $('<label class="pointer">L</label>');
+                var name = $('<label>'+arr[4]+'</label>');
                 kitModule.append(checkBox, eye, name);
+                this.checkBox(checkBox, arr[1],arr[2]);
+                this.eyeType(eye, arr[5],arr[2]);
             }         
             parent.append(kitModule);
+        }
+        private checkBox(CB:JQuery,str:string,id)
+        {
+            if (str == '0')
+            {
+                CB.attr("checked", false);
+            } else
+            {
+                CB.attr("checked", true);
+            }
+            CB.change(function ()
+            {
+                var checkBoxStr = "";
+                if (CB.is(':checked'))
+                {
+                    checkBoxStr = "1";
+                } else
+                {
+                    checkBoxStr = "0";
+                }
+                globle.Globle.chcekBoxChange(id, checkBoxStr);
+            })
+        }
+
+        private eyeType(eyeType:JQuery,str:string,id)
+        {
+            var eye;
+            if (str == "0")
+            {
+                eyeType.text("L");
+            } else
+            {
+                eyeType.text("R");
+            }
+            eyeType.click(function ()
+            {
+                var str = "";
+                if (eyeType.text() == "L")
+                {
+                    eyeType.text("R") ;
+                    str = "1";
+                }
+                else
+                {
+                    eyeType.text("L");
+                    str = "0";
+                }
+                globle.Globle.updateEye(id, str);
+            });
         }
     }
 } 
