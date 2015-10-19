@@ -9,6 +9,7 @@ module component
      *编号   创建/修改日期    创建/修改人   内容
      *0001    2015-08-31        王威         
      *0002    2015-09-22        王威    添加左右 imageList 拖拽效果
+     *0003    2015-10-19        王威    添加根据筛选日期显示图片功能
      */
     export class ModuleBase
     {
@@ -16,13 +17,26 @@ module component
         private _content: JQuery;
         private kitInfo: string;
         private timer: number;
+        /**
+         * 存入日期的数组
+         * @type {Array<any>}
+         */
+        Arr: Array<any> =[];
         module_title: JQuery;
         module_content: JQuery;
         module_parent: JQuery;
+        module_footer: JQuery;
+        /**
+         * 
+         * @type {Array<JQuery>}
+         */
+        HistoryPhotoArr: Array<JQuery> =[];
         constructor()
         {
             this._title = $("<div class='nav-tabs-alt'></div>");
             this._content = $('<div class="row-row"></div>');
+            this.module_footer =  $('<div class="padding5 b-b b-light text-center hide"></div>');
+            this._content.append(this.module_footer);
             this.module_parent.find(".vbox").append(this._title, this._content);
             this.moduleTitle();
             this.moduleContent();
@@ -74,7 +88,22 @@ module component
                 }
                 arr.push(nametype, i);
                 o.createImgModule(parent, arr, [realityWidth, realityHeight, cutWidth, cutHeight]);
+
+				o.ScreenDate(imgDate);        
             });
+          
+        }
+        /**
+         * 0003
+         * 筛选出相同的日期
+         * @param {[type]} imgDate 传入的日期
+         */
+        ScreenDate(imgDate){
+        	for (var j = 0; j < this.Arr.length; j++) 
+                {
+                    if (this.Arr[j] == imgDate) return true;//筛选出相同的日期
+                }
+            this.Arr.push(imgDate);     
         }
         /**
         *0002
@@ -115,6 +144,13 @@ module component
             parent.append(imageModule);
 
             //----------------------------------------------------------------
+            if (o.kitInfo == "patientHistoryPhoto")
+            {
+               
+                o.HistoryPhotoArr.push(imageModule);
+              
+                imageModule.attr("data", arr[3]);
+            }
             //阻止图片拖拽
             uitls.Kit.preventImgDrag(img);
 
@@ -166,6 +202,12 @@ module component
             }         
             parent.append(kitModule);
         }
+        /**
+         * 多项按钮
+         * @param {JQuery} CB  [description]
+         * @param {string} str [description]
+         * @param {[type]} id  [description]
+         */
         private checkBox(CB:JQuery,str:string,id)
         {
             if (str == '0')
@@ -188,7 +230,12 @@ module component
                 globle.Globle.chcekBoxChange(id, checkBoxStr);
             })
         }
-
+        /**
+         * 眼别
+         * @param {JQuery} eyeType [description]
+         * @param {string} str     [description]
+         * @param {[type]} id      [description]
+         */
         private eyeType(eyeType:JQuery,str:string,id)
         {
             var eye;
