@@ -39,6 +39,14 @@ module glass{
             var a = new component.RightModule();
             var c = new component.CenterModule();
             var d = new component.FullModule();
+           // this.one();
+            $(".wrapper-sm").mCustomScrollbar();
+        }
+         one()
+       {
+             var draw = SVG('paper').size(300, 300)
+             var rect = draw.rect(100, 100).attr({ fill: '#f06' })
+             rect.animate().move(150, 150);
         }
 	}
 } 
