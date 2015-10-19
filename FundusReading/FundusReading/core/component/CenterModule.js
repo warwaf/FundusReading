@@ -139,15 +139,27 @@ var component;
                     screenfull.request(globle.Globle.full_module[0]);
                 }
             });
-            $(document).keyup(function (event) {
-                switch (event.which) {
-                    case 27:
-                        globle.Globle.main_module.show();
-                        globle.Globle.full_module.hide();
-                        screenfull.exit();
-                        globle.Globle.is_full = false;
-                }
+            //监听全屏事件
+            $(document).bind("webkitfullscreenchange", function () {
+                o.exit();
+            }).bind("mozfullscreenchange", function () {
+                o.exit();
+            }).bind("MSFullscreenChange", function () {
+                o.exit();
+            }).bind("fullscreenChange", function () {
+                o.exit();
             });
+        };
+        /**
+         *退出全屏
+         */
+        CenterModule.prototype.exit = function () {
+            if (!screenfull.isFullscreen) {
+                globle.Globle.main_module.show();
+                globle.Globle.full_module.hide();
+                screenfull.exit();
+                globle.Globle.is_full = false;
+            }
         };
         /**
         *0001

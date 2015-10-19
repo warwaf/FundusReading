@@ -12,8 +12,12 @@ var component;
      */
     var ModuleBase = (function () {
         function ModuleBase() {
+            this.Arr = [];
+            this.HistoryPhotoArr = [];
             this._title = $("<div class='nav-tabs-alt'></div>");
             this._content = $('<div class="row-row"></div>');
+            this.module_footer = $('<div class="padding5 b-b b-light text-center hide"></div>');
+            this._content.append(this.module_footer);
             this.module_parent.find(".vbox").append(this._title, this._content);
             this.moduleTitle();
             this.moduleContent();
@@ -47,13 +51,13 @@ var component;
                 var imgId = $(this).attr("id");
                 var imgDate = $(this).attr("date");
                 var name = $(this).attr("name");
-                var imgType = $(this).attr("type");
+                var eyeType = $(this).attr("type");
                 var realityWidth = $(this).attr("width");
                 var realityHeight = $(this).attr("height");
                 var cutWidth = $(this).attr("cutwidth");
                 var cutHeight = $(this).attr("cutheight");
                 var arr = [];
-                arr.push(path, checkBox, imgId, imgDate, name, imgType);
+                arr.push(path, checkBox, imgId, imgDate, name, eyeType);
                 var nametype;
                 if (i < 9) {
                     nametype = "00" + (i + 1);
@@ -63,6 +67,11 @@ var component;
                 }
                 arr.push(nametype, i);
                 o.createImgModule(parent, arr, [realityWidth, realityHeight, cutWidth, cutHeight]);
+                for (var j = 0; j < o.Arr.length; j++) {
+                    if (o.Arr[j] == imgDate)
+                        return true; //筛选出相同的日期
+                }
+                o.Arr.push(imgDate);
             });
         };
         /**
@@ -98,9 +107,13 @@ var component;
             imageModule.append(imgModule);
             parent.append(imageModule);
             //----------------------------------------------------------------
+            if (o.kitInfo == "patientHistoryPhoto") {
+                o.HistoryPhotoArr.push(imageModule);
+                imageModule.attr("data", arr[3]);
+            }
             //阻止图片拖拽
             uitls.Kit.preventImgDrag(img);
-            this.creatImgModuleInfo(imageModule);
+            this.creatImgModuleInfo(imageModule, arr);
             img.attr("src", arr[0]);
             uitls.CutImage.cutImage(img, 144, cutArr);
             img.mouseup(function (e) {
@@ -124,20 +137,61 @@ var component;
         *@parent 父级   JQuery对象
         *@arr
         */
-        ModuleBase.prototype.creatImgModuleInfo = function (parent) {
+        ModuleBase.prototype.creatImgModuleInfo = function (parent, arr) {
             if (this.kitInfo == "referPhoto" || this.kitInfo == 'patientHistoryPhoto') {
                 var kitModule = $('<div class="kit-model"></div>');
-                var name = $('<label>name</label>');
+                var name = $('<label>' + arr[4] + '</label>');
                 kitModule.append(name);
             }
             else {
                 var kitModule = $('<div class="kit-model"></div>');
                 var checkBox = $('<input type="checkbox"/>');
-                var eye = $('<label>L</label>');
-                var name = $('<label>name</label>');
+                var eye = $('<label class="pointer">L</label>');
+                var name = $('<label>' + arr[4] + '</label>');
                 kitModule.append(checkBox, eye, name);
+                this.checkBox(checkBox, arr[1], arr[2]);
+                this.eyeType(eye, arr[5], arr[2]);
             }
             parent.append(kitModule);
+        };
+        ModuleBase.prototype.checkBox = function (CB, str, id) {
+            if (str == '0') {
+                CB.attr("checked", false);
+            }
+            else {
+                CB.attr("checked", true);
+            }
+            CB.change(function () {
+                var checkBoxStr = "";
+                if (CB.is(':checked')) {
+                    checkBoxStr = "1";
+                }
+                else {
+                    checkBoxStr = "0";
+                }
+                globle.Globle.chcekBoxChange(id, checkBoxStr);
+            });
+        };
+        ModuleBase.prototype.eyeType = function (eyeType, str, id) {
+            var eye;
+            if (str == "0") {
+                eyeType.text("L");
+            }
+            else {
+                eyeType.text("R");
+            }
+            eyeType.click(function () {
+                var str = "";
+                if (eyeType.text() == "L") {
+                    eyeType.text("R");
+                    str = "1";
+                }
+                else {
+                    eyeType.text("L");
+                    str = "0";
+                }
+                globle.Globle.updateEye(id, str);
+            });
         };
         return ModuleBase;
     })();

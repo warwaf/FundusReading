@@ -51,14 +51,15 @@ var component;
          *  继承ModuleBase的 moduleContent 方法
          */
         RightModule.prototype.moduleContent = function () {
-            var cell = $('<div class="cell scrollable hover"></div>');
+            var o = this;
+            var cell = $('<div class="cell "></div>');
             var cell_inner = $('<div class="cell-inner"></div>');
             var tab_content = $('<div class="tab-content"></div>');
             this.tab_paneL = $('<div class="tab-pane active"></div>');
-            var left_moduleL = $('<div class= "wrapper-sm"></div>');
+            var left_moduleL = $('<div class= "wrapper-sm"><div/></div>');
             this.tab_paneR = $('<div class="tab-pane"></div>');
-            var left_moduleR = $('<div class= "wrapper-sm"></div>');
-            var footer = $('<div class="padder b-b b-light text-center">aaaaaaaaa</div>');
+            var left_moduleR = $('<div class= "wrapper-sm h"><div/></div>');
+            var footer = $('<div class="padding5 b-b b-light text-center"></div>');
             this.module_content = cell;
             cell.append(cell_inner);
             cell_inner.append(tab_content);
@@ -66,9 +67,25 @@ var component;
             this.tab_paneL.append(left_moduleL);
             tab_content.append(this.tab_paneR);
             this.tab_paneR.append(footer, left_moduleR);
-            this.createImageList(left_moduleL, globle.Globle.ReferenceXML, "referPhoto");
-            this.createImageList(left_moduleR, globle.Globle.historyXML, "patientHistoryPhoto");
+            this.createImageList(left_moduleL.find("div"), globle.Globle.ReferenceXML, "referPhoto");
+            this.createImageList(left_moduleR.find("div"), globle.Globle.historyXML, "patientHistoryPhoto");
+            this.showImage(o.Arr[0]);
+            var select = new glass.Select(footer, this.Arr, function (value) {
+                o.showImage(value);
+                $(".h").mCustomScrollbar("update");
+            });
             _super.prototype.moduleContent.call(this);
+        };
+        RightModule.prototype.showImage = function (select) {
+            for (var i = 0; i < this.HistoryPhotoArr.length; i++) {
+                if (this.HistoryPhotoArr[i].attr("data") == select) {
+                    this.HistoryPhotoArr[i].show();
+                }
+                else {
+                    this.HistoryPhotoArr[i].hide();
+                    ;
+                }
+            }
         };
         return RightModule;
     })(component.ModuleBase);

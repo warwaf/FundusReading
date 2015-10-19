@@ -37,6 +37,13 @@ var glass;
             var a = new component.RightModule();
             var c = new component.CenterModule();
             var d = new component.FullModule();
+            // this.one();
+            $(".wrapper-sm").mCustomScrollbar();
+        };
+        FundusReading.prototype.one = function () {
+            var draw = SVG('paper').size(300, 300);
+            var rect = draw.rect(100, 100).attr({ fill: '#f06' });
+            rect.animate().move(150, 150);
         };
         return FundusReading;
     })();

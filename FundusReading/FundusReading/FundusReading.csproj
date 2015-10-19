@@ -22,20 +22,17 @@
     <Content Include="core\css\app.css" />
     <Content Include="core\css\bootstrap.css" />
     <Content Include="core\css\iconfont.css" />
+    <Content Include="core\css\jquery.mCustomScrollbar.css" />
     <Content Include="core\css\war.css" />
     <Content Include="core\images\20150320145743.png" />
-    <Content Include="core\images\4058f0fc61823ca79299ffd8b557ba46.jpg" />
-    <Content Include="core\images\964ac83fd123c8bfb2c0495f5e2944ca.jpg" />
-    <Content Include="core\images\bjwc000016_20150201_120000_Color_R_003.jpg" />
-    <Content Include="core\images\clear.png" />
-    <Content Include="core\images\d361e6b92a796720d12672547ad55972.jpg" />
     <Content Include="core\images\upload__670f005f_1496f4fe58e__8000_00000006.jpg" />
     <Content Include="core\images\wangwei_20140514_141645_Color_R_036.jpg" />
     <Content Include="core\images\wangwei_20140514_141714_Color_L_037.jpg" />
     <Content Include="core\jq\jquery-1.11.0.min.js" />
+    <Content Include="core\jq\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="core\jq\jquery.mousewheel.js" />
     <Content Include="core\jq\screenfull.js" />
-    <Content Include="core\uitls\screenfull.min.js" />
+    <Content Include="core\jq\SVG.js" />
     <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
@@ -46,10 +43,12 @@
     <TypeScriptCompile Include="core\component\RightModule.ts" />
     <TypeScriptCompile Include="core\component\LeftModule.ts" />
     <TypeScriptCompile Include="core\component\ModuleBase.ts" />
+    <TypeScriptCompile Include="core\component\Select.ts" />
     <TypeScriptCompile Include="core\FundusReading.ts" />
     <TypeScriptCompile Include="core\Globle.ts" />
     <TypeScriptCompile Include="core\jq\jquery.d.ts" />
     <TypeScriptCompile Include="core\jq\screenfull.d.ts" />
+    <TypeScriptCompile Include="core\jq\svgjs.d.ts" />
     <TypeScriptCompile Include="core\Magnifier\Magnifier.ts" />
     <TypeScriptCompile Include="core\Magnifier\MagnifierBase.ts" />
     <TypeScriptCompile Include="core\uitls\CutImage.ts" />
