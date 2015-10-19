@@ -19,7 +19,7 @@ module uitls
         * @param {Array<number>} arr  [真实宽，真实高，剪切宽，剪切高]
         */
        static cutImage(img: JQuery, size: number, arr: Array<number>)
-       {
+       {           
            var ratio = this.ratioY(size, arr[1], arr[3]);
            if (arr[3] == 1)
            {
@@ -29,8 +29,8 @@ module uitls
                ratio = this.ratioY(size, arr[1], arr[3]);
            }
            img.css({ "marginLeft": -this.imgOffsetX(size, arr[0], arr[2], ratio) + "px", "marginTop": -this.imgOffsetY(size, arr[1], arr[3], ratio) + "px"})
-           //img.width(this.imgWidth(size, arr[0], arr[2], ratio));
-           //img.height(this.imgHeight(size, arr[1], arr[3], ratio));
+           img.width(this.imgWidth(size, arr[0], arr[2], ratio));
+           img.height(this.imgHeight(size, arr[1], arr[3], ratio));
            img.attr("width", this.imgWidth(size, arr[0], arr[2], ratio)).attr("height", this.imgHeight(size, arr[1], arr[3], ratio));
            img.parent().css("height",parseFloat( img.attr("height")) - arr[3]/2);
        }
